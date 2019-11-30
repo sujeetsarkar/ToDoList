@@ -1,7 +1,7 @@
 
 Check Branches
 
-UI - ToDoListUI and
+UI - ToDoListUI
 
 
 API - ToDoListAPI
