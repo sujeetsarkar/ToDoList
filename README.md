@@ -1,10 +1,10 @@
 
 Check Branches
 
-UI - ToDoListUI
+UI - ToDoListUI (Angular 8)
 
 
-API - ToDoListAPI
+API - ToDoListAPI (.Net Core)
 
 
 # ToDoList
