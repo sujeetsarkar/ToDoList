@@ -15,20 +15,5 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: |
-    if ! command -v dotnet &> /dev/null
-    then
-      echo ".NET SDK not found. Installing..."
-      sudo apt update
-      sudo apt install -y wget apt-transport-https software-properties-common
-      wget https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb
-      sudo dpkg -i packages-microsoft-prod.deb
-      sudo apt update
-      sudo apt install -y dotnet-sdk-8.0
-    else
-      echo ".NET SDK already installed: $(dotnet --version)"
-    fi
-  displayName: 'Check and Install .NET SDK if Missing'
-
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
