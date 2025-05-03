@@ -23,7 +23,7 @@ steps:
   displayName: 'Build solution'
   workingDirectory: $(Build.SourcesDirectory)
 
-- script: dotnet publish $(projectPath) -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
+- script: dotnet publish $(Build.SourcesDirectory)/ToDoList.API/ToDoList.API.csproj -c Release -o $(Build.ArtifactStagingDirectory)
   displayName: 'Publish API'
   workingDirectory: $(Build.SourcesDirectory)
 
