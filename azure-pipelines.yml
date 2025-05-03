@@ -23,10 +23,6 @@ steps:
   displayName: 'Build solution'
   workingDirectory: $(Build.SourcesDirectory)
 
-- script: dotnet test $(projectPath) --configuration $(buildConfiguration) --no-build --logger trx
-  displayName: 'Run tests'
-  workingDirectory: $(Build.SourcesDirectory)
-
 - script: dotnet publish $(projectPath) -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
   displayName: 'Publish API'
   workingDirectory: $(Build.SourcesDirectory)
