@@ -1,43 +1,37 @@
-# ASP.NET Core
-# Build and test ASP.NET Core projects targeting .NET Core.
-# Add steps that run tests, create a NuGet package, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-
 trigger:
-- master
-
-pool: Default  # Your self-hosted agent pool
+- master  # Changed from 'main' to 'master'
 
 variables:
   buildConfiguration: 'Release'
-  dotnetVersion: '8.0.x'
+  solutionPath: 'ToDoList.API/ToDoList.API.sln'  # Path to your solution
+  projectPath: 'ToDoList.API/ToDoList.API.csproj'  # Path to your project
+
+pool:
+  name: Default
 
 steps:
 - task: UseDotNet@2
-  displayName: 'Use .NET SDK'
+  displayName: 'Install .NET SDK'
   inputs:
-    version: $(dotnetVersion)
-    performMultiLevelLookup: true
+    version: '8.0.x'
 
-- script: dotnet restore
-  displayName: 'Restore dependencies'
+- script: dotnet restore $(solutionPath)
+  displayName: 'Restore NuGet packages'
+  workingDirectory: $(Build.SourcesDirectory)  # Explicitly set working directory
 
-- script: dotnet build --configuration $(buildConfiguration) --no-restore
+- script: dotnet build $(solutionPath) --configuration $(buildConfiguration) --no-restore
   displayName: 'Build solution'
+  workingDirectory: $(Build.SourcesDirectory)
 
-- script: dotnet test --configuration $(buildConfiguration) --no-build --logger "trx;LogFileName=testresults.trx"
+- script: dotnet test $(projectPath) --configuration $(buildConfiguration) --no-build --logger trx
   displayName: 'Run tests'
-  
-- task: PublishTestResults@2
-  inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
+  workingDirectory: $(Build.SourcesDirectory)
 
-- script: dotnet publish -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
-  displayName: 'Publish artifacts'
+- script: dotnet publish $(projectPath) -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
+  displayName: 'Publish API'
+  workingDirectory: $(Build.SourcesDirectory)
 
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
-    publishLocation: 'Container'
