@@ -12,9 +12,10 @@ namespace ToDoList.API.BusinessLogic
     public class ToDoListBL : ILogin, IToDoList
     {
         private readonly ToDoListContext _DbCtx;
-        public ToDoListBL()
+        public ToDoListBL(ToDoListContext DbCtx)
         {
-            _DbCtx = new ToDoListContext();
+            _DbCtx = DbCtx;
+            //_DbCtx = new ToDoListContext();
         }
 
         public UserInfo LoginManager(Login login)
@@ -24,11 +25,11 @@ namespace ToDoList.API.BusinessLogic
             {
                 UserInfo userInfo = new UserInfo
                 {
-                    UserName = res.UserName,
-                    FirstName = res.FirstName,
-                    LastName = res.LastName,
-                    Email = res.Email,
-                    PhoneNumber = res.PhoneNumber
+                    UserName = res.UserName!,
+                    FirstName = res.FirstName!,
+                    LastName = res.LastName!,
+                    Email = res.Email!,
+                    PhoneNumber = res.PhoneNumber!
                 };
                 return userInfo;
             }
@@ -43,6 +44,11 @@ namespace ToDoList.API.BusinessLogic
                 return "User Added Successfully";
             }
             throw new Exception("User Can not be added");
+        }
+        public IEnumerable<User> GetAlUser()
+        {
+            var res = _DbCtx.Users.ToList();
+            return res;
         }
         public string UpdateUser(User user)
         {
@@ -87,7 +93,7 @@ namespace ToDoList.API.BusinessLogic
         {
             try
             {
-                int id = _DbCtx.Users.Where(U => U.UserName == username).FirstOrDefault().Id;
+                int id = _DbCtx.Users.Where(U => U.UserName == username).FirstOrDefault()!.Id;
                 var res = _DbCtx.ToDos.Where(T => T.UserId == id);
                 return res;
             }

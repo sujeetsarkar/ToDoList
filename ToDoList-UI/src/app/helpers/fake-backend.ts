@@ -60,11 +60,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // helper functions
 
         // tslint:disable-next-line: no-shadowed-variable
-        function ok(body?) {
+        function ok(body?: any) {
             return of(new HttpResponse({ status: 200, body }));
         }
 
-        function error(message) {
+        function error(message: any) {
             return throwError({ error: { message } });
         }
 

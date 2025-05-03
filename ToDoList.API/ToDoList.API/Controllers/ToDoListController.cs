@@ -13,9 +13,9 @@ namespace ToDoList.API.Controllers
     {
         private readonly ToDoListBL _BLInstance;
 
-        public ToDoListController()
+        public ToDoListController(ToDoListBL BLInstance)
         {
-            _BLInstance = new ToDoListBL();
+            _BLInstance = BLInstance;
         }
 
         [HttpPost("api/users/authenticate")]
@@ -24,6 +24,19 @@ namespace ToDoList.API.Controllers
             try
             {
                 return Ok(_BLInstance.LoginManager(LoginCredentials));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        [HttpPost("api/users")]
+        public ActionResult<UserInfo> GetAllUsers()
+        {
+            try
+            {
+                return Ok(_BLInstance.GetAlUser());
             }
             catch (Exception ex)
             {

@@ -1,21 +1,23 @@
 import { Component } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { UserInfo } from './models';
 import { AuthenticationService } from './services';
-import { Router } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-root',
+  imports: [RouterOutlet, NgIf],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  currentUser: UserInfo;
+  currentUser: UserInfo | undefined;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService
   ) {
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x!);
   }
 
   logout() {

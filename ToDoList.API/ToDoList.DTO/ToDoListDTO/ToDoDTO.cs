@@ -6,8 +6,8 @@ namespace ToDoList.DTO.ToDoListDTO
 {
     public class ToDoDTO
     {
-        public string ListName { get; set; }
-        public string Description { get; set; }
+        public required string ListName { get; set; }
+        public required string Description { get; set; }
         public int UserId { get; set; }
     }
 }
