@@ -6,7 +6,7 @@
 trigger:
 - master
 
-pool: VM-ToDoList-Dev  # Your self-hosted agent pool
+pool: Default  # Your self-hosted agent pool
 
 variables:
   buildConfiguration: 'Release'
